@@ -436,8 +436,6 @@ func bufferStats(cbuf *z.Buffer) {
 func getBuf(dir string) *z.Buffer {
 	return z.NewBuffer(64<<20, "Reducer.GetBuf").
 		WithAutoMmap(1<<30, filepath.Join(dir, bufferDir)).
-		//WithMaxSize(64 << 30)
-		// Change by JWR
 		WithMaxSize(0)
 }
 
