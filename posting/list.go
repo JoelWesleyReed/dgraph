@@ -948,6 +948,8 @@ func (l *List) Rollup(alloc *z.Allocator) ([]*bpb.KV, error) {
 		return delKvs, nil
 	}
 
+	/* JWR: trying to disable jupiter (forbidden) keys
+
 	if l.forbid || len(out.parts) > MaxSplits {
 		var kvs []*bpb.KV
 		kv := &bpb.KV{
@@ -966,6 +968,8 @@ func (l *List) Rollup(alloc *z.Allocator) ([]*bpb.KV, error) {
 		kvs = append(kvs, delKvs...)
 		return kvs, nil
 	}
+	*/
+
 	if len(out.parts) > 0 {
 		// The main list for the split postings should not contain postings and bitmap.
 		x.AssertTrue(out.plist.Postings == nil)
