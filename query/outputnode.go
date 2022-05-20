@@ -76,7 +76,7 @@ func ToJson(ctx context.Context, l *Latency, sgl []*SubGraph, field gqlSchema.Fi
 // for a response size > math.MaxUint32.
 
 // Changed by JWR
-const maxEncodedSize = uint64(math.MaxUint32)
+const maxEncodedSize = uint64(math.MaxUint64)
 
 type encoder struct {
 	// attrMap has mapping of string predicates to uint16 ids.
