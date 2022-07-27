@@ -1,24 +1,21 @@
 #!/bin/bash
 
-IMAGE=code-int.ornl.gov:4567/torro/dgraph:v21.03.2-patch004-ma-rc1
-IMAGE_AMD64=code-int.ornl.gov:4567/torro/dgraph:v21.03.2-patch004-ma-amd64-linux
-IMAGE_ARM64=code-int.ornl.gov:4567/torro/dgraph:v21.03.2-patch004-ma-arm64-linux
+IMAGE=code-int.ornl.gov:4567/torro/dgraph:v21.03.2-patch004-ma
+IMAGE_AMD64=code-int.ornl.gov:4567/torro/dgraph:v21.03.2-patch004-ma-linux-amd64
+IMAGE_ARM64=code-int.ornl.gov:4567/torro/dgraph:v21.03.2-patch004-ma-linux-arm64
 
 cp ../dgraph/dgraph .
 
 docker image rm $IMAGE_AMD64
 docker image rm $IMAGE_ARM64
-docker image rm dgraph:tmp
 
-docker build -t dgraph:tmp .
-docker tag dgraph:tmp $IMAGE_AMD64
+docker buildx build --platform linux/amd64 --progress plain --load -t $IMAGE_AMD64 .
 docker push $IMAGE_AMD64
-docker tag dgraph:tmp $IMAGE_ARM64
+docker buildx build --platform linux/arm64 --progress plain --load -t $IMAGE_ARM64 .
 docker push $IMAGE_ARM64
 
 docker image rm $IMAGE_AMD64
 docker image rm $IMAGE_ARM64
-docker image rm dgraph:tmp
 
 docker manifest rm $IMAGE
 docker manifest create $IMAGE $IMAGE_AMD64 $IMAGE_ARM64
