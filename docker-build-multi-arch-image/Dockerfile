@@ -11,7 +11,7 @@ RUN git clone https://github.com/JoelWesleyReed/dgraph && \
 
 FROM debian:buster-slim
 ARG TARGETARCH
-RUN apt update && apt -y install libjemalloc2 ca-certificates curl
+RUN apt update && apt -y install ca-certificates curl
 COPY --from=build-env /tmp/dgraph/dgraph/dgraph /usr/local/bin/dgraph
 RUN mkdir /dgraph
 WORKDIR /dgraph
