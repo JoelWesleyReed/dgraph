@@ -7,13 +7,14 @@ RUN git clone https://github.com/JoelWesleyReed/dgraph && \
       cd dgraph && \
       git checkout v21.03.2-patch004 && \
       cd dgraph && \
-      go get -u -v google.golang.org/grpc && \
       make
 
 FROM debian:buster-slim
 ARG TARGETARCH
 RUN apt update && apt -y install libjemalloc2 ca-certificates curl
 COPY --from=build-env /tmp/dgraph/dgraph/dgraph /usr/local/bin/dgraph
+RUN mkdir /dgraph
+WORKDIR /dgraph
 ENV GODEBUG=madvdontneed=1
-EXPOSE 5080 6080 7080 8080 8000 9080
+EXPOSE 5080 6080 7080 8080 9080
 CMD ["dgraph"]
