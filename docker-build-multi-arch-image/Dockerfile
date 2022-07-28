@@ -3,10 +3,8 @@ ARG TARGETARCH
 RUN apt update && apt -y install git build-essential curl
 WORKDIR /tmp
 ENV CGO_ENABLED=1 GOOS=linux GOARCH=$TARGETARCH
-RUN git clone https://github.com/JoelWesleyReed/dgraph && \
-      cd dgraph && \
-      git checkout v21.03.2-patch004 && \
-      cd dgraph && \
+RUN git clone --depth 1 --branch v21.03.2-patch005 https://github.com/JoelWesleyReed/dgraph && \
+      cd dgraph/dgraph && \
       make
 
 FROM debian:buster-slim
